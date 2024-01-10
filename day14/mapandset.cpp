@@ -92,16 +92,13 @@ void TotalByGroup(int n, int arr[])
     }
 }
 
-void SimpleDictionary(string Newtext, string Vocabulary, string FindWords)
+void SimpleDictionary(map<string, string> &tu_dien, string FindWords)
 {
     cout << "Nhập từ để tìm: ";
     cin.ignore();
     cin >> FindWords;
 
-    map<string, string> tu_dien;
-    tu_dien[Newtext] = Vocabulary;
-
-    if (tu_dien.count(FindWords) > 0)
+    if (tu_dien.find(FindWords) != tu_dien.end())
     {
         cout << "Nghĩa của từ " << FindWords << " là: " << tu_dien[FindWords] << endl;
     }
@@ -112,24 +109,29 @@ void SimpleDictionary(string Newtext, string Vocabulary, string FindWords)
 }
 
 // input user
-void inputVocabulary(int n, string &Newtext, string &Vocabulary)
+void inputVocabulary(map<string, string> &tu_dien)
 {
+    int n;
+    string Newtext, Vocabulary;
 
     cout << "Nhập số lượng cần thêm từ: ";
     cin >> n;
 
     for (int i = 0; i < n; i++)
     {
-        cout << "Nhập từ : ";
+        cout << "Nhập từ: ";
         cin.ignore();
         cin >> Newtext;
 
-        cout << "Nhập từ định nghĩa : ";
+        cout << "Nhập từ định nghĩa: ";
         cin >> Vocabulary;
+
+        tu_dien[Newtext] = Vocabulary;
     }
 
     cout << "\nBạn đã thêm thành công\n";
 }
+
 void input(int &n, int arr[])
 {
 
@@ -210,33 +212,32 @@ int main()
                 break;
 
             case 3:
+            {
                 int n3;
+                map<string, string> tu_dien; // Create dictionary here
+
             try_again:
                 cout << "1. Thêm từ\n";
-                cout << "2. Tìm  từ\n";
-                cout << "Enter your : ";
+                cout << "2. Tìm từ\n";
+                cout << "Enter your: ";
                 cin >> n3;
 
                 while (n3)
                 {
-
                     switch (n3)
                     {
                     case 1:
-                        inputVocabulary(n, Newtext, Vocabulary);
-
+                        inputVocabulary(tu_dien);
                         goto try_again;
                     case 2:
-
-                        SimpleDictionary(Newtext, Vocabulary, FindWords);
+                        SimpleDictionary(tu_dien, FindWords);
                         break;
                     default:
                         cout << "Invalid choice. Please enter 1-2." << endl;
                         break;
                     }
                 }
-
-                break;
+            }
             default:
                 cout << "Invalid choice. Please enter 1-3." << endl;
                 break;
