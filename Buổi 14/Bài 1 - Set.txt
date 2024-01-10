@@ -1,0 +1,94 @@
+/******************************************************************************
+
+Bài Tập Về Set:
+Loại Bỏ Phần Tử Trùng Lặp:
+
+Cho một dãy số nguyên, hãy sử dụng set để loại bỏ các phần tử trùng lặp và in ra dãy số mới.
+Kiểm Tra Tồn Tại:
+
+Nhập một dãy từ bàn phím và một số nguyên. Sử dụng set để kiểm tra xem số nguyên đó có tồn tại trong dãy không.
+Tính Tổng:
+
+Nhập một dãy số nguyên từ bàn phím và sử dụng set để tính tổng các số.
+
+*******************************************************************************/
+#include <iostream>
+#include <set>
+using namespace std;
+
+void removeTrunglap(set<int> &inputSet);
+void kiemtraTonTai(set<int> &inputSet);
+int tinhtongSet(set<int> &inputSet);
+
+int main() {
+    
+    set<int> nhapSet;
+    
+    int n;
+    cout << "Nhập số lượng phần tử của dãy số nguyên: ";
+    cin >> n;
+    
+    cout << "Nhập từng phần tử của dãy số nguyên: ";
+    for (int i=0; i<n; i++)
+    {
+        int o;
+        cin >> o;
+        nhapSet.insert(o);
+    }
+    
+    cout << endl;
+    
+    if(nhapSet.empty())
+    {
+        cout << "Không có phần tử nào trong Set.";
+    }
+    
+    removeTrunglap(nhapSet);
+    kiemtraTonTai(nhapSet);
+    cout << "Tổng các số trong dảy là: " <<  tinhtongSet(nhapSet) << endl;
+    
+
+    return 0;
+}
+
+void removeTrunglap(set<int> &inputSet)
+{
+    set<int> newInputSet(inputSet.begin(), inputSet.end()); // Tạo 1 Set mới và coppy các phần tử từ Set cũ - Set mới tự động loại bỏ các phần tử trùng lặp
+    inputSet.clear();
+    inputSet = newInputSet;
+    cout << "Dãy mới sau khi loại bỏ phần tử trùng lặp" << endl;
+    
+    set<int>::iterator it = inputSet.begin();
+    for (int i=0; i<inputSet.size();i++,++it)
+    {
+        cout << *it << " "; // Tương tự như con trỏ, sử dụng * để lấy giá trị của iterator
+    }
+    cout << endl;
+}
+
+void kiemtraTonTai(set<int> &inputSet)
+{
+    int n;
+    cout << "Nhập số nguyên cần tìm: "; 
+    cin >> n;
+    set<int>:: iterator it = inputSet.begin();
+    if(inputSet.find(n)==inputSet.end())
+    {
+        cout << "Không tìm thấy phần tử" << endl;
+    }
+    else
+    {
+        cout << "Phần tử: " << n << " có trong dảy tại vị trí thứ " << distance(it, inputSet.find(n)) + 1 << endl;
+    }
+}
+
+int tinhtongSet(set<int> &inputSet)
+{
+    int sum = 0; 
+    set<int>:: iterator it = inputSet.begin();
+    for (int i=0; i<inputSet.size(); i++, ++it)
+    {
+        sum += *it;
+    }
+    return sum;
+}

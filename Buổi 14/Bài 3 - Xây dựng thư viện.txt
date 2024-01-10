@@ -1,0 +1,186 @@
+/******************************************************************************
+
+Từ Điển Đơn Giản:
+
+Tạo một map để làm từ điển đơn giản. Nhập các cặp từ và định nghĩa từ bàn phím. Sau đó, nhập một từ và in ra định nghĩa của nó (nếu có).
+Hướng Dẫn:
+Sử dụng thư viện <set> và <map> để khai báo và sử dụng set và map.
+Thực hiện các thao tác như insert, erase, find để thao tác với set và map.
+Sử dụng vòng lặp và hàm begin, end để duyệt qua các phần tử của set và map.
+
+*******************************************************************************/
+#include <iostream>
+#include <string>
+#include <set>
+#include <map>
+using namespace std;
+
+int show_menu();
+void printTuDien(map<string, string> _tuDien);
+void addTuDien(set<string> &_keyTudien, map<string, string> &_tuDien);
+void removeTuDien(set<string> &_keyTudien, map<string, string> &_tuDien);
+void findTuDien(set<string> _keyTudien, map<string, string> _tuDien);
+
+int main()
+{
+   map<string, string> tuDien;
+   set<string> keyTudien;
+   
+   while(true)
+   {
+    //   cout << "Vong lap dang chay" << endl;
+       int chose = show_menu();
+       switch(chose)
+      {
+          case 1:
+          // Xem danh sach tu dien
+          printTuDien(tuDien);
+          break;
+          case 2:
+          // Them tu vao tu dien
+          addTuDien(keyTudien, tuDien);
+          break;
+          case 3: 
+          // Xoa tu o tu dien
+          removeTuDien(keyTudien, tuDien);
+          break;
+          case 4:
+          // Tra cuu tu
+          findTuDien(keyTudien, tuDien);
+          break;
+          case 0:
+          // Thoat chuong trinh
+          cout << "Bye bye";
+          return 0; // De ket thuc ham main
+          default:
+          cout << "Lựa chọn không hợp lệ." << endl;
+      }
+      cout << "Bạn có muốn tiếp tục không? (1-có/0-không)";
+      bool is_continue;
+      cin >> is_continue;
+      
+      if(!is_continue)
+      {
+          cout << "Bye bye";
+          break;
+      }
+   }
+    return 0;
+}
+
+int show_menu()
+{
+    system("cls");
+    int chose;
+    cout << "===== MENU =====" << endl;
+    cout << "1. Xem danh sách từ điển" << endl;
+    cout << "2. Thêm từ vào từ điển" << endl;
+    cout << "3. Xóa từ ở từ điển" << endl;
+    cout << "4. Tra cứu từ" << endl;
+    cout << "0. Thoát chương trình" << endl;
+    
+    cout << "Lựa chọn của bạn là: ";
+    cin >> chose;
+    return chose;
+};
+
+void printTuDien(map<string, string> _tuDien)
+{
+
+    if(_tuDien.empty()){
+        cout << "Chưa có từ và định nghĩa!" << endl;
+    };
+    for (map<string, string>::iterator it = _tuDien.begin(); it != _tuDien.end(); ++it) {
+        cout << it->first << ": " << it->second << endl;
+    }
+};
+
+void addTuDien(set<string> &_keyTudien, map<string, string> &_tuDien)
+{
+    cin.ignore();
+    while(true)
+  {
+      cout << "Nhập từ cần định nghĩa (Không nhập gì và enter nếu muốn kết thúc nhập): ";
+      string inputTu;
+      getline(cin, inputTu);
+      _keyTudien.insert(inputTu);
+      if(inputTu.empty())
+      {
+          break;
+      }
+      cout << "Nhập định nghĩa: ";
+      string inputDinhNghia;
+      getline(cin, inputDinhNghia);
+      _tuDien[inputTu] = inputDinhNghia;
+  }
+};
+
+void findTuDien(set<string> _keyTudien, map<string, string> _tuDien)
+{
+    
+    while(true)
+  {
+    cin.ignore();
+    cout << "Nhập từ cần tra cứu: " << endl;
+    string inputTraCuu;
+    getline(cin, inputTraCuu);
+   
+  if(inputTraCuu.empty())
+    {
+      break;
+    }
+   
+  if(_keyTudien.find(inputTraCuu)==_keyTudien.end())
+    {
+      cout << "Không tìm thấy từ cần tra cứu!" << endl;
+      
+    }
+  else
+    {
+      cout << "Định nghĩa của từ '" << inputTraCuu << "': " << _tuDien[inputTraCuu]<< endl;
+    }
+    cout << "Bạn có muốn tiếp tục tra cứu không? (1/0)";
+     bool is_continue;
+     cin >> is_continue;
+      
+     if(!is_continue)
+      {
+        break;
+      }
+  }
+};
+
+void removeTuDien(set<string> &_keyTudien, map<string, string> &_tuDien)
+{
+    while(true)
+  {
+    cin.ignore();
+    cout << "Nhập từ cần xóa: " << endl;
+    string inputXoa;
+    getline(cin, inputXoa);
+   
+  if(inputXoa.empty())
+    {
+      break;
+    }
+   
+  if(_keyTudien.find(inputXoa)==_keyTudien.end())
+    {
+      cout << "Không tìm thấy từ cần xóa!" << endl;
+      
+    }
+  else
+    {
+      _tuDien.erase(inputXoa);
+      cout << "Đã xóa thành công!" << endl;
+    }
+    cout << "Bạn có muốn tiếp tục xóa không? (1/0)";
+     bool is_continue;
+     cin >> is_continue;
+      
+     if(!is_continue)
+      {
+        break;
+      }
+  }
+}

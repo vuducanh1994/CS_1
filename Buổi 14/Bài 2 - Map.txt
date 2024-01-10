@@ -1,0 +1,76 @@
+/******************************************************************************
+
+Bài Tập Về Map:
+Đếm Số Lần Xuất Hiện:
+
+Nhập một dãy từ bàn phím và sử dụng map để đếm số lần xuất hiện của mỗi phần tử trong dãy.
+Tính Tổng Theo Nhóm:
+
+Nhập một dãy số nguyên và sử dụng map để tính tổng của các số theo từng nhóm. Nhóm được xác định bằng giá trị chia hết cho 5.
+
+*******************************************************************************/
+#include <iostream>
+#include <map>
+#include <vector>
+using namespace std;
+
+void demSolanxuathien(vector<int> inputVector);
+int tinhTong(vector<int> inputVector);
+
+int main() {
+    
+    vector<int> nhapVector;
+    
+    int n;
+    cout << "Nhập số lượng phần tử của dãy số: ";
+    cin >> n;
+    for (int i=0; i< n; i++)
+    {
+        int x;
+        cin >> x;
+        nhapVector.push_back(x);
+    }
+    
+    demSolanxuathien(nhapVector);
+    cout << endl;
+    cout << "Tổng các số chia hết cho 5 là : " << tinhTong(nhapVector) << endl;
+    
+    return 0;
+}
+
+void demSolanxuathien(vector<int> inputVector)
+{
+    map<int, int> inputMap;
+    
+    for(vector<int>::iterator it = inputVector.begin(); it != inputVector.end(); ++it)
+    {
+        inputMap[*it]++;
+    // Bước 1: Kiểm tra xem *it đã làm key trong inputMap chưa
+    // Bước 1.1: Nếu chưa, thêm một cặp key-value mới (*it, 0) vào inputMap
+    // Bước 1.2: Nếu đã có, giá trị hiện tại của inputMap[*it] sẽ được sử dụng
+    // Bước 2: Tăng giá trị của inputMap[*it] lên một đơn vị
+    }
+    cout << "Số lần xuất hiện của mỗi phần tử trong dãy là:" << endl;
+    for (map<int, int>::iterator it = inputMap.begin(); it != inputMap.end(); ++it) {
+        cout << it->first << ": " << it->second << " lan" << endl;
+    }
+}
+
+int tinhTong(vector<int> inputVector)
+{
+    map<int, int> inputMap;
+    
+    for(vector<int>::iterator it = inputVector.begin(); it != inputVector.end(); ++it)
+    {
+        if(*it%5==0)
+        {
+            inputMap[*it]++;
+        }
+    }
+    
+    int sum = 0;
+    for (map<int, int>::iterator it = inputMap.begin(); it != inputMap.end(); ++it) {
+        sum += (it->first)*(it->second);
+    }
+    return sum;
+}
